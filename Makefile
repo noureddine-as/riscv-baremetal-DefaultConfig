@@ -1,12 +1,6 @@
 #******************************************************************************
 #    Noureddine Ait Said
-#    TIMA Laboratory
 #    nouredddine.aitsaid0@gmail.com
-#
-#
-#	Parameters are: PLATFORM := defaults to LOWRISCV
-#					VERBOSE :=  defaults to 0
-#
 #------------------------------------------------------------------------------
 SRC_DIR = ./src/
 BUILD_DIR = .
@@ -14,9 +8,6 @@ BUILD_DIR = .
 SOURCES = $(SRC_DIR)entry.S \
 			$(SRC_DIR)main.c \
 			$(SRC_DIR)syscalls.c 
-		#	$(SRC_DIR)pthread_lib.c 
-		#	\
-		#	$(SRC_DIR)pthread_barrier.c
 
 INCLUDES = -I./include
 
@@ -53,8 +44,6 @@ endif
 
 CFLAGS +=  -march=$(ISA) -mabi=$(ABI) -mcmodel=medany -ffreestanding -static -nostdlib -nostartfiles $(INCLUDES) 
 LDFLAGS = -T $(LINKER)
-
-
 
 OBJS = $(SOURCES:.c=.o)
 DEPS = $(SOURCES:.c=.d)
