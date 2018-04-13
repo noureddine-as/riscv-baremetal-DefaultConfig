@@ -30,7 +30,8 @@ LOG_FILE = pthread_log.txt
 
 ISA ?= rv64imafd
 ABI ?= lp64
-N_PROC ?= 4
+N_PROC ?= 1
+SPIKE_RBB_PORT = 9824
 #SPIKE_SIMULATION ?= -DSPIKE_SIMULATION
 
 ifndef RISCV
@@ -44,8 +45,13 @@ DUMPER = $(RISCV)/bin/riscv64-unknown-elf-objdump
 SIZE = $(RISCV)/bin/riscv64-unknown-elf-size
 SPIKE = $(RISCV)/bin/spike
 
+ifdef ENABLE_DEBUG
+CFLAGS = -g -Og
+else
+CFLAGS = -O3
+endif
 
-CFLAGS = -O3 -march=$(ISA) -mabi=$(ABI) -mcmodel=medany -ffreestanding -static -nostdlib -nostartfiles $(INCLUDES) 
+CFLAGS +=  -march=$(ISA) -mabi=$(ABI) -mcmodel=medany -ffreestanding -static -nostdlib -nostartfiles $(INCLUDES) 
 LDFLAGS = -T $(LINKER)
 
 
@@ -90,7 +96,12 @@ sim:
 .PHONY: debug
 debug:
 	@echo "-------------------  Starting Debugging  -------------------"
-	@$(SPIKE) -d -p$(N_PROC) --isa=$(ISA) $(TARGET).out
+	$(SPIKE) -d -p$(N_PROC) --isa=$(ISA) $(TARGET).out
+
+.PHONY: gdb-debug
+gdb-debug:
+	@echo "-------------------  Starting Debugging  -------------------"
+	$(SPIKE) --rbb-port=$(SPIKE_RBB_PORT) -p$(N_PROC) --isa=$(ISA) $(TARGET).out
 
 .PHONY: log
 log:
