@@ -37,7 +37,7 @@ SIZE = $(RISCV)/bin/riscv64-unknown-elf-size
 SPIKE = $(RISCV)/bin/spike
 
 ifdef ENABLE_DEBUG
-CFLAGS = -g -Og
+CFLAGS = -g -Og -ggdb  
 else
 CFLAGS = -O3
 endif
