@@ -36,11 +36,11 @@ DUMPER = $(RISCV)/bin/riscv64-unknown-elf-objdump
 SIZE = $(RISCV)/bin/riscv64-unknown-elf-size
 SPIKE = $(RISCV)/bin/spike
 
-ifdef ENABLE_DEBUG
-CFLAGS = -g -Og -ggdb  
-else
+#ifdef ENABLE_DEBUG
+#CFLAGS = -g -Og -ggdb  
+#else
 CFLAGS = -O3
-endif
+#endif
 
 CFLAGS +=  -march=$(ISA) -mabi=$(ABI) -mcmodel=medany -ffreestanding -static -nostdlib -nostartfiles $(INCLUDES) 
 LDFLAGS = -T $(LINKER)

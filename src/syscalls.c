@@ -171,6 +171,7 @@ void _init(int cid, int nc)
   // only single-threaded programs should ever get here.
   int ret = main(0, 0);
 
+/*
   char buf[NUM_COUNTERS * 32] __attribute__((aligned(64)));
   char* pbuf = buf;
   for (int i = 0; i < NUM_COUNTERS; i++)
@@ -178,7 +179,8 @@ void _init(int cid, int nc)
       pbuf += sprintf(pbuf, "%s = %d\n", counter_names[i], counters[i]);
   if (pbuf != buf)
     printstr(buf);
-
+*/
+  
   exit(ret);
 }
 
