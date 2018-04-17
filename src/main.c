@@ -9,6 +9,7 @@ int main(int argc, char** argv);
 int main(int argc, char** argv)
 {
   // single-threaded programs override this function.
-  printf("Hello, World from MAIN ! .. core %d \n", argc);
+  //printf("Hello, World from MAIN ! .. core %d \n", argc);
+
   return 1;
 }

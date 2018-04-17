@@ -178,15 +178,21 @@ void _init(int cid, int nc)
 
   // CORE 0 and 1 get here
   // They all wait untill ret == 1 
-  while(ret < 1)
-    ;
+  //while(ret < 1)
+  //  ;
 
   if (cid == 1)
      ret += (main(cid, 0) << cid);
 
+     if (cid == 2)
+     ret += (main(cid, 0) << cid);
+
+     if (cid == 3)
+     ret += (main(cid, 0) << cid);
+
   // CORE 0 and 1 get here
   // They all wait untill ret == 2 
-  while(ret < 2);
+  while(ret < 15);
 
   // All cores stay here and Core 0 the master shuts down everything
   thread_entry(cid, nc);
