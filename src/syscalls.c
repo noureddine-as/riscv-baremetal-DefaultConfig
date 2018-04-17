@@ -165,6 +165,7 @@ static void init_tls()
 
 void _init(int cid, int nc)
 {
+  executing_hartid = cid;
   init_tls();
   thread_entry(cid, nc);
 
@@ -180,7 +181,7 @@ void _init(int cid, int nc)
   if (pbuf != buf)
     printstr(buf);
 */
-  
+
   exit(ret);
 }
 

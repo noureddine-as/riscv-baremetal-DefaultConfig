@@ -1,13 +1,11 @@
 # See LICENSE for license details.
 
 #include "encoding.h"
-//#include "pthread_lib.h"
 
+#define MAX_HARTS         8
 
-#define MAX_HARTS         1
-
-// Defined directly in the Makefile by the compiler
-#define SPIKE_SIMULATION  1
+# // Defined directly in the Makefile by the compiler
+#  #define SPIKE_SIMULATION  1
 
 #if __riscv_xlen == 64
 # define LREG ld
@@ -158,13 +156,14 @@ _disable_harts:
   # Therefore wait 5000 cycles to guarantee that every core was simulated
   # at least once 
   
-#if defined(SPIKE_SIMULATION)
-  rdcycle t0
-  li      t1, 5000
-  add     t1, t0, t1
-_count_cycle_:      rdcycle t0
-  blt     t0, t1, _count_cycle_
-#endif
+
+# #if defined(SPIKE_SIMULATION)
+#   rdcycle t0
+#   li      t1, 5000
+#   add     t1, t0, t1
+# _count_cycle_:      rdcycle t0
+#   blt     t0, t1, _count_cycle_
+# #endif
 
   
   // Re-Read the mhartid + pass two args to _init
