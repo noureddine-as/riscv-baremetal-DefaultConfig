@@ -131,7 +131,7 @@ void __attribute__((weak)) thread_entry(int cid, int nc)
 {
   // multi-threaded programs override this function.
   // for the case of single-threaded programs, only let core 0 proceed.
-  while (cid != 0);
+  while (cid != 3);
 }
 
 
@@ -165,12 +165,12 @@ static void init_tls()
 
 void _init(int cid, int nc)
 {
-  executing_hartid = cid;
+  //executing_hartid = cid;
   init_tls();
   thread_entry(cid, nc);
 
   // only single-threaded programs should ever get here.
-  int ret = main(0, 0);
+  int ret = main(cid, 0);
 
 /*
   char buf[NUM_COUNTERS * 32] __attribute__((aligned(64)));

@@ -11,6 +11,6 @@ int main(int argc, char** argv);
 int main(int argc, char** argv)
 {
   // single-threaded programs override this function.
-  printf("Hello, World from MAIN ! .. core %d \n", executing_hartid);
+  printf("Hello, World from MAIN ! .. core %d \n", argc);
   return 999;
 }
