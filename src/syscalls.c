@@ -131,7 +131,7 @@ void __attribute__((weak)) thread_entry(int cid, int nc)
 {
   // multi-threaded programs override this function.
   // for the case of single-threaded programs, only let core 0 proceed.
-  while (cid != 3);
+  while (cid != 0);
 }
 
 
@@ -163,14 +163,33 @@ static void init_tls()
 
 */
 
+volatile unsigned int ret = 0;
 void _init(int cid, int nc)
 {
   //executing_hartid = cid;
+
   init_tls();
-  thread_entry(cid, nc);
 
   // only single-threaded programs should ever get here.
-  int ret = main(cid, 0);
+  
+  if (cid == 0)
+      ret += (main(cid, 0) << cid);
+
+
+  // CORE 0 and 1 get here
+  // They all wait untill ret == 1 
+  while(ret < 1)
+    ;
+
+  if (cid == 1)
+     ret += (main(cid, 0) << cid);
+
+  // CORE 0 and 1 get here
+  // They all wait untill ret == 2 
+  while(ret < 2);
+
+  // All cores stay here and Core 0 the master shuts down everything
+  thread_entry(cid, nc);
 
 /*
   char buf[NUM_COUNTERS * 32] __attribute__((aligned(64)));
@@ -181,6 +200,8 @@ void _init(int cid, int nc)
   if (pbuf != buf)
     printstr(buf);
 */
+
+  printf("Final ret = %d .. Core %d  \n", ret, cid);
 
   exit(ret);
 }
